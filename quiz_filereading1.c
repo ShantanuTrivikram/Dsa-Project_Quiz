@@ -72,16 +72,16 @@ int main (int argc, char *argv[]) {
 	free(buffer);
 	fclose(input_ques);
 	
-	input_ans = fopen("AnswerKey.txt", "r");
-	while(fscanf(input_ans,"%s", Answerkey) != EOF) {
-		 ;
-	}
+//	input_ans = fopen("AnswerKey.txt", "r");
+//while(fscanf(input_ans,"%s", Answerkey) != EOF) {
+//		 ;
+//	}
 	
-	for(k = 0; k < 128; k++) {
-		if(strcmp(Answerkey[k], answer[k]) == 0) {
-			score++;
-		}
-	}
+//	for(k = 0; k < 128; k++) {
+//		if(strcmp(Answerkey[k], answer[k]) == 0) {
+//			score++;
+//		}
+//	}
 	return 0;
 
 }
