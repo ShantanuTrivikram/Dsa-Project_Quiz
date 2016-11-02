@@ -196,8 +196,8 @@ int main(int argc, char *argv[]) {
 						break;
 
 					case 4 :
-						printf("Enter the name of the file\n\n");
-						scanf("%s", filename);
+//						printf("Enter the name of the file\n\n");
+//						scanf("%s", filename);
 						compare(filename);
 				}			
 
