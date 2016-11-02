@@ -25,7 +25,7 @@ void match(char *filename);
 //void Sample();
 
 int main(int argc, char *argv[]) {
-	int i, type, typequiz, single_mult, statistics, number = 0, total, max, score_percentile, j, number2 = 0, *percentage;
+	int i, type, length = 0, typequiz, single_mult, statistics, number = 0, total, max, score_percentile, j, number2 = 0, *percentage;
 	float correct_ans, wrong_ans;
 	char **answers, username[128], ch, **questions, *original_answerkey;	
 	FILE *answer_key, *original_ans;
@@ -33,173 +33,177 @@ int main(int argc, char *argv[]) {
 	double avg, percentile1;
 	FILE *score_save;
 
-//	if(strcmp(argv[1],"help") == 0) {
-//		printf("DESCRIPTION :\n\tThis is a quiz program which allows you to create a question bank for a quiz.\n");
-//		printf("\tThe format of 'Enter the question' is '<body>' terminated by'<?>'\n");
-//		printf("\tYou can add any number of options in the multiple choice section of the quiz\n");
-//		printf("\tThe format of 'Enter the options' is '<options>' terminated by 'Ctrl + D'\n"); 
-//		return 0;
-//	}
-	//	printf("***********************************************************\n") ;
-	printf("\n\t\t\t\t\tThe Quiz\n\n\n\n");
-	printf("1. Create a Quiz\n\n\n");
-	printf("2. Try a Quiz\n\n\n");
-	printf("3. Statistics\n\n\n");
-	scanf("%d", &i);
+	if(argc == 2) {
+		if(strcmp(argv[1],"help") == 0) {
+			printf("DESCRIPTION :\n\tThis is a quiz program which allows you to create a question bank for a quiz.\n");
+			printf("\tThe format of 'Enter the question' is '<body>' terminated by'<?>'\n");
+			printf("\tYou can add any number of options in the multiple choice section of the quiz\n");
+			printf("\tThe format of 'Enter the options' is '<options>' terminated by 'Ctrl + D'\n"); 
+			return 0;
+		}	
+	}
+//	printf("***********************************************************\n") ;
+	else {
+		printf("\n\t\t\t\t\tThe Quiz\n\n\n\n");
+		printf("1. Create a Quiz\n\n\n");
+		printf("2. Try a Quiz\n\n\n");
+		printf("3. Statistics\n\n\n");
+		scanf("%d", &i);
 
-	switch (i) {
-		case 1 : 
-			//			printf("saf");
-			//			QuestionBank();
-			printf("\n\nWhat type of questions do you want to add ?\n\n\n");	
-			printf("1. Multiple choice questions.\n\n2. Match the following\n\n");
-			printf("3. Numeric Answer Question\n\n");
-			scanf("%d", &type);
-			switch (type) {
-				case 1 :
-					printf("\n\n1.Single Correct Option\n\n");
-				//	printf("2.Multiple correct Option\n\n");
-					scanf("%d", &single_mult);
-					if(single_mult == 1) {
-						printf("\n\nEnter the file in which to save the question bank\n\n");
+		switch (i) {
+			case 1 : 
+				//			printf("saf");
+				//			QuestionBank();
+				printf("\n\nWhat type of questions do you want to add ?\n\n\n");	
+				printf("1. Multiple choice questions.\n\n2. Match the following\n\n");
+				printf("3. Numeric Answer Question\n\n");
+				scanf("%d", &type);
+				switch (type) {
+					case 1 :
+						printf("\n\n1.Single Correct Option\n\n");
+						//	printf("2.Multiple correct Option\n\n");
+						scanf("%d", &single_mult);
+						if(single_mult == 1) {
+							printf("\n\nEnter the file in which to save the question bank\n\n");
+							scanf("%s", filename);
+							printf("\nEnter the marking scheme\n");
+							printf("Marks for the correct answer : ");
+							scanf("%f", &correct_ans);
+							printf("\nMarks deducted for the wrong answer : ");
+							scanf("%f", &wrong_ans);
+							QuestionBank_multiple(filename, correct_ans, wrong_ans);
+							//				quiz_filereading1(filename, correct_ans, wrong_ans);
+							break;
+						}
+						//	case 2 :
+						//		match();
+						//	break;
+					case 2 :
+						printf("Enter the file in which to save the question bank\n\n");
 						scanf("%s", filename);
 						printf("\nEnter the marking scheme\n");
 						printf("Marks for the correct answer : ");
 						scanf("%f", &correct_ans);
 						printf("\nMarks deducted for the wrong answer : ");
 						scanf("%f", &wrong_ans);
-						QuestionBank_multiple(filename, correct_ans, wrong_ans);
-						//				quiz_filereading1(filename, correct_ans, wrong_ans);
+						match(filename);	
 						break;
-					}
-					//	case 2 :
-					//		match();
-					//	break;
-				case 2 :
-					printf("Enter the file in which to save the question bank\n\n");
-					scanf("%s", filename);
-	   				printf("\nEnter the marking scheme\n");
-					printf("Marks for the correct answer : ");
-					scanf("%f", &correct_ans);
-					printf("\nMarks deducted for the wrong answer : ");
-					scanf("%f", &wrong_ans);
-					match(filename);	
-					break;
 
-				case 3 :
-					printf("Enter the file in which to save the question bank\n\n");
-					scanf("%s", filename);
-					printf("\nEnter the marking scheme\n");
-					printf("Marks for the correct answer : ");
-					scanf("%f", &correct_ans);
-					printf("\nMarks deducted for the wrong answer : ");
-					scanf("%f", &wrong_ans);
-					QuestionBank_numericals(filename, correct_ans, wrong_ans);
-					break;	
+					case 3 :
+						printf("Enter the file in which to save the question bank\n\n");
+						scanf("%s", filename);
+						printf("\nEnter the marking scheme\n");
+						printf("Marks for the correct answer : ");
+						scanf("%f", &correct_ans);
+						printf("\nMarks deducted for the wrong answer : ");
+						scanf("%f", &wrong_ans);
+						QuestionBank_numericals(filename, correct_ans, wrong_ans);
+						break;	
 
-			}
-			break;
-		case 2 : 
-			printf("Enter the type of quiz you want to attempt\n\n");
-			printf("1. Multiple choice quiz\n\n");	
-			printf("2. Match the following\n\n");
-			printf("3. Numeric Answer Quiz\n\n");
-			scanf("%d", &typequiz);
-			switch (typequiz) {
-				case 1 :
-					
-					printf("Enter the name of the file\n\n");
-					scanf("%s", filename);
-					quiz_filereading1_multiple_choice(filename);
-					break;
+				}
+				break;
+			case 2 : 
+				printf("Enter the type of quiz you want to attempt\n\n");
+				printf("1. Multiple choice quiz\n\n");	
+				printf("2. Match the following\n\n");
+				printf("3. Numeric Answer Quiz\n\n");
+				scanf("%d", &typequiz);
+				switch (typequiz) {
+					case 1 :
 
-				case 2 :
-					printf("Enter the name of the file\n\n");
-					scanf("%s", filename);
-					quiz_filereading1_multiple_choice(filename);
-					break;
+						printf("Enter the name of the file\n\n");
+						scanf("%s", filename);
+						quiz_filereading1_multiple_choice(filename);
+						break;
 
-				case 3 :
-	
-					printf("Enter the name of the file\n\n");
-					scanf("%s", filename);
-					quiz_filereading1_numerical(filename);
-					break;
-			}
-			break;
+					case 2 :
+						printf("Enter the name of the file\n\n");
+						scanf("%s", filename);
+						quiz_filereading1_multiple_choice(filename);
+						break;
 
-		case 3 :
-			//		int i, number = 0, total, max, score_percentile;
-			//		char *score_stats, *fp, ch, username[128];
-			//		double avg, percentile1;
-			//		FILE *score_save;
-			//	score_stats = (char *)malloc(sizeof(char) * 128);
-			score_save = fopen("score_save.txt", "r");
-			while((ch = fgetc(score_save)) != EOF) {
-				if(ch == '\t')
-					number++;
-			}
-			fclose(score_save);
-			score_save = fopen("score_save.txt", "r");
-			//	printf("%d\n", number);
-			data score1[number + 1];
-			for(i = 0; i < number; i++) {
-				fscanf(score_save, "%s", score1[i].username);
-				fscanf(score_save, "%d", &(score1[i].score));
-			}
-			//	for(i = 0; i < number; i++) {
-			//		printf("%s\n", score1[i].username);
-			//		printf("%d\n", score1[i].score);
+					case 3 :
 
-			//	}
-			total = i;
-//			avg = average_score(score1, total);
-//			printf("Average score is %lf\n", avg);
+						printf("Enter the name of the file\n\n");
+						scanf("%s", filename);
+						quiz_filereading1_numerical(filename);
+						break;
+				}
+				break;
+
+			case 3 :
+				//		int i, number = 0, total, max, score_percentile;
+				//		char *score_stats, *fp, ch, username[128];
+				//		double avg, percentile1;
+				//		FILE *score_save;
+				//	score_stats = (char *)malloc(sizeof(char) * 128);
+				score_save = fopen("score_save.txt", "r");
+				while((ch = fgetc(score_save)) != EOF) {
+					if(ch == '\t')
+						number++;
+				}
+				fclose(score_save);
+				score_save = fopen("score_save.txt", "r");
+				//	printf("%d\n", number);
+				data score1[number + 1];
+				for(i = 0; i < number; i++) {
+					fscanf(score_save, "%s", score1[i].username);
+					fscanf(score_save, "%d", &(score1[i].score));
+				}
+				//	for(i = 0; i < number; i++) {
+				//		printf("%s\n", score1[i].username);
+				//		printf("%d\n", score1[i].score);
+
+				//	}
+				total = i;
+				//			avg = average_score(score1, total);
+				//			printf("Average score is %lf\n", avg);
 
 
 
 
 
-			printf("1. Find the average marks scored in the quiz\n\n");
-			printf("2. Find the maximum marks scored in the quiz\n\n");
-			printf("3. Find the percentile of a given participant\n\n");
-			printf("4. Find the number of participants who got a particular question correct\n\n");
-			scanf("%d", &statistics);
+				printf("1. Find the average marks scored in the quiz\n\n");
+				printf("2. Find the maximum marks scored in the quiz\n\n");
+				printf("3. Find the percentile of a given participant\n\n");
+				printf("4. Find the number of participants who got a particular question correct\n\n");
+				scanf("%d", &statistics);
 
-			switch(statistics) {
-				case 1 :
-					avg = average_score(score1, total);
-					printf("The average score is %lf\n", avg);
-					break;
-				case 2 :
-					max = max_score(score1, total); 
-					printf("The maximum score is  %d\n %d\n", (score1[max].score), max);
-					break;
-				case 3 :
-					printf("Find the percentile of : ");
-					scanf("%s", username);
-					for(i = 0; i < total; i++) {
-						if (strcmp(username, score1[i].username) == 0) 
-							break;		
-					//	else {
-					//		printf("Enter Valid Username\n");
-					//		//							break;
-					//	}
-					}
-					score_percentile = score1[i].score;
-					percentile1 = percentile(score1, total, score_percentile);
-					printf("Percentile of %s is %lf\n", username, percentile1);
-					//					fclose(score_save);
-					break;
+				switch(statistics) {
+					case 1 :
+						avg = average_score(score1, total);
+						printf("The average score is %lf\n", avg);
+						break;
+					case 2 :
+						max = max_score(score1, total); 
+						printf("The maximum score is  %d\n %d\n", (score1[max].score), max);
+						break;
+					case 3 :
+						printf("Find the percentile of : ");
+						scanf("%s", username);
+						for(i = 0; i < total; i++) {
+							if (strcmp(username, score1[i].username) == 0) 
+								break;		
+							//	else {
+							//		printf("Enter Valid Username\n");
+							//		//							break;
+							//	}
+						}
+						score_percentile = score1[i].score;
+						percentile1 = percentile(score1, total, score_percentile);
+						printf("Percentile of %s is %lf\n", username, percentile1);
+						//					fclose(score_save);
+						break;
 
-				case 4 :
-					printf("Enter the name of the file\n\n");
-					scanf("%s", filename);
-					compare(filename);
-			}			
+					case 4 :
+						printf("Enter the name of the file\n\n");
+						scanf("%s", filename);
+						compare(filename);
+				}			
 
+		}
+		return 0;
 	}
-			return 0;
 }
 
 //#include <stdio.h>
@@ -535,10 +539,11 @@ void compare(char *filename) {
 void quiz_filereading1_numerical(char *filename) {
 	char 	*buffer, *username, *buffer2, *temp, answernumerical[128];   
 	size_t i, buffer_size;       
-	char    c, Answerkey[128];             
+	char    c;
+	int  Answerkey[128];             
 	FILE   *input_ques, *input_ans, *savescore, *save_answer, *marking_scheme;         
 	static int j = 0;
-	int score = 0, k, answer[128], number = 0;
+	int score = 0, k, answer[128], number = 0, length = 0;
 	float correct_ans1, wrong_ans1;
 //	if (argc == 1) {
 //		fprintf(stderr, "Invalid Argument\n");
@@ -577,6 +582,7 @@ void quiz_filereading1_numerical(char *filename) {
 			scanf("%d", &answer[j]);
 //			printf("Answer String %c\n ", answer[j]);
 			j++;
+			length++;
 //			buffer[i] = '\0';
 			i = 0;
 			free(buffer);
@@ -608,17 +614,19 @@ void quiz_filereading1_numerical(char *filename) {
 	free(buffer);
 	fclose(input_ques);
 	for(i = 0; i < number; i++) {
-	}			
-	int total = strlen(answer);	
+	}		
+	printf("%d\n", length);	
+//	int total = strlen(answer);	
+	int total = length;
 	save_answer = fopen("AnswerMatch_Numericals.txt", "a");
 	fprintf(save_answer, "%s", username);
-//	for(i = 0; i < total; i++) {
-	fprintf(save_answer, "\t%d\n",  answer);
-		
+	for(i = 0; i < total; i++) {
+		fprintf(save_answer, "\t%d\n",  answer[i]);
+	}
 
 	input_ans = fopen("AnswerKey_Numerical.txt", "r");
 	i = 0;
-		while(fscanf(input_ans,"%s", &Answerkey[i]) != EOF) {
+		while(fscanf(input_ans,"%d", &Answerkey[i]) != EOF) {
 			//		printf("Answer key %c \n", Answerkey[i]);
 			//		printf("Answer String %c\n ", answer[i]);
 			i++;
@@ -668,7 +676,7 @@ int i = 0, j = 0, k = 0, l = 0, number ;
 	scanf("%d", &number);
 
 	questions = (char **)malloc(sizeof(char *) * number);
-	opt = (char **)malloc(sizeof(char *) * number);
+//	opt = (char **)malloc(sizeof(char *) * number);
 
 	while(i < number) {
 
