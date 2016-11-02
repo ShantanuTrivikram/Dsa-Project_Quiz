@@ -27,6 +27,6 @@ and checks the answers and the score
 
 A question bank created is also entered to test the code
 
-Multiple correct questions , Match the Columns, Alpha Numeric answers an be accepted
+Match the Columns, Alpha Numeric answers an be accepted
 
-Running quiz scores can be saved for later use.
+Statistics such as the avarage score of the quiz, maximum score, percentile of individual participant as well as percentage of people who got a particular question correct can also be calculated.
