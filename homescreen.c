@@ -26,7 +26,7 @@ void match(char *filename);
 
 int main(int argc, char *argv[]) {
 	int i, type, length = 0, typequiz, single_mult, statistics, number = 0, total, max, score_percentile, j, number2 = 0, *percentage;
-	float correct_ans, wrong_ans;
+	float correct_ans = 1, wrong_ans = 1;
 	char **answers, username[128], ch, **questions, *original_answerkey;	
 	FILE *answer_key, *original_ans;
 	char filename[32], *score_stats, *fp;
@@ -81,22 +81,22 @@ int main(int argc, char *argv[]) {
 					case 2 :
 						printf("Enter the file in which to save the question bank\n\n");
 						scanf("%s", filename);
-						printf("\nEnter the marking scheme\n");
-						printf("Marks for the correct answer : ");
-						scanf("%f", &correct_ans);
-						printf("\nMarks deducted for the wrong answer : ");
-						scanf("%f", &wrong_ans);
+					//	printf("\nEnter the marking scheme\n");
+					//	printf("Marks for the correct answer : ");
+					//	scanf("%f", &correct_ans);
+					//	printf("\nMarks deducted for the wrong answer : ");
+					//	scanf("%f", &wrong_ans);
 						match(filename);	
 						break;
 
 					case 3 :
-						printf("Enter the file in which to save the question bank\n\n");
+						printf("\nEnter the file in which to save the question bank\n\n");
 						scanf("%s", filename);
-						printf("\nEnter the marking scheme\n");
-						printf("Marks for the correct answer : ");
-						scanf("%f", &correct_ans);
-						printf("\nMarks deducted for the wrong answer : ");
-						scanf("%f", &wrong_ans);
+				//		printf("\nEnter the marking scheme\n");
+				//		printf("Marks for the correct answer : ");
+				//		scanf("%f", &correct_ans);
+				//		printf("\nMarks deducted for the wrong answer : ");
+				//		scanf("%f", &wrong_ans);
 						QuestionBank_numericals(filename, correct_ans, wrong_ans);
 						break;	
 
@@ -111,20 +111,20 @@ int main(int argc, char *argv[]) {
 				switch (typequiz) {
 					case 1 :
 
-						printf("Enter the name of the file\n\n");
+						printf("\nEnter the name of the file\n\n");
 						scanf("%s", filename);
 						quiz_filereading1_multiple_choice(filename);
 						break;
 
 					case 2 :
-						printf("Enter the name of the file\n\n");
+						printf("\nEnter the name of the file\n\n");
 						scanf("%s", filename);
 						quiz_filereading1_multiple_choice(filename);
 						break;
 
 					case 3 :
 
-						printf("Enter the name of the file\n\n");
+						printf("\nEnter the name of the file\n\n");
 						scanf("%s", filename);
 						quiz_filereading1_numerical(filename);
 						break;
@@ -494,9 +494,9 @@ void compare(char *filename) {
 	for(i = 0; i < number ; i++) {
 		answers[i] = (char *)malloc(sizeof(char) * 128);
 		
-	//	for(j = 0; j < i ; j++) {
-	//		fscanf(answer_key, "%c", &answers[i][j]);
-	//	}
+		for(j = 0; j < i - number ; j++) {
+			fscanf(answer_key, "%c", &answers[i][j]);
+		}
 		j = 0;
 		while(1) {
 			ch = fgetc(answer_key);	
@@ -528,10 +528,9 @@ void compare(char *filename) {
 	}
 
 	for(i = 0; i < number2; i++) {
-		printf("%lf%% people got question %d correct\n", ((percentage[i]) * (1.0) / (number * 1.0)) * 100, i + 1);
-	}
-
-	}
+		printf("%lf%% people got question %d correct\n\n", ((percentage[i]) * (1.0) / (number * 1.0)) * 100, i + 1);
+	}	
+}
 
 
 
